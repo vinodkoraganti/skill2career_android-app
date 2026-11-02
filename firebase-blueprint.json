@@ -1,0 +1,77 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information and career preferences",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "accountType": { "type": "string", "enum": ["STUDENT", "PROFESSIONAL"] },
+        "educationLevel": { "type": "string" },
+        "college": { "type": "string" },
+        "branch": { "type": "string" },
+        "graduationYear": { "type": "string" },
+        "preferredLocation": { "type": "string" },
+        "targetRole": { "type": "string" },
+        "careerGoal": { "type": "string" },
+        "technicalSkills": { "type": "string" },
+        "profileCompletionPercentage": { "type": "integer" },
+        "isAdmin": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "fullName", "email"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Online courses and certifications",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "provider": { "type": "string" },
+        "partner": { "type": "string" },
+        "category": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "duration": { "type": "string" },
+        "isPaid": { "type": "boolean" },
+        "priceTag": { "type": "string" },
+        "description": { "type": "string" },
+        "tags": { "type": "array" },
+        "rating": { "type": "number" },
+        "enrolledCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "provider", "category"]
+    },
+    "Enrollment": {
+      "title": "Enrollment",
+      "description": "Course enrollment record for a user",
+      "type": "object",
+      "properties": {
+        "courseId": { "type": "string" },
+        "title": { "type": "string" },
+        "provider": { "type": "string" },
+        "progressPercentage": { "type": "integer" },
+        "enrolledTimestamp": { "type": "integer" }
+      },
+      "required": ["courseId", "title", "progressPercentage"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profile collection"
+    },
+    "/courses/{courseId}": {
+      "schema": { "$ref": "#/entities/Course" },
+      "description": "Course directory collection where admins can add new courses"
+    },
+    "/users/{userId}/enrollments/{courseId}": {
+      "schema": { "$ref": "#/entities/Enrollment" },
+      "description": "User course enrollments"
+    }
+  }
+}
